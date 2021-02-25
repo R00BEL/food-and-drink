@@ -1,5 +1,5 @@
 import Dishes from "./components/Dishes/index.js";
-import Drinks from "./components/Dishes/index.js";
+import Drinks from "./components/Drinks/index.js";
 
 function App() {
   return (
