@@ -14,10 +14,10 @@ function Drinks (props) {
             <h2>DRINKS:</h2>
             <ul>
                 {
-                drinks.map(drinks => (
-                    <li>
-                        <p>{drinks.name}</p>
-                        <img src={"images/" + drinks.name + ".jpg"} alt={drinks.name}/>
+                drinks.map(currentValue => (
+                    <li key={currentValue.name}>
+                        <p>{currentValue.name}</p>
+                        <img src={"images/" + currentValue.name + ".jpg"} alt={currentValue.name}/>
                     </li>
                 ))
                 }

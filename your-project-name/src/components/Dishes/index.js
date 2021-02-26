@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 const initialDishes = [
-    { name: "jelly"},
+    { name: "jelly"}
 ]
 
 function Dishes (props) {
@@ -12,10 +12,10 @@ function Dishes (props) {
             <h2>DISHES:</h2>
             <ul>
                 {
-                dishes.map(dishes => (
-                    <li>
-                        <p>{dishes.name}</p>
-                        <img src={"images/" + dishes.name + ".jpg"} alt={dishes.name}/>
+                dishes.map(currentValue => (
+                    <li key={currentValue.name}>
+                        <p>{currentValue.name}</p>
+                        <img src={"images/" + currentValue.name + ".jpg"} alt={currentValue.name}/>
                     </li>
                 ))
                 }
