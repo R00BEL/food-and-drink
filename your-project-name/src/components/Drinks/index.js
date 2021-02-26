@@ -1,8 +1,16 @@
 import React, {useState} from "react";
 
 const initiaDrinks = [
-    { name: "green tea"},
-    { name: "latte"}
+    { name: "green tea",
+      link: function(){
+        return "images/" + this.name + ".jpg"
+      }
+    },
+    { name: "latte",
+        link: function(){
+        return "images/" + this.name + ".jpg"
+      }
+    }
 ]
 
 
@@ -17,7 +25,7 @@ function Drinks (props) {
                 drinks.map(currentValue => (
                     <li key={currentValue.name}>
                         <p>{currentValue.name}</p>
-                        <img src={"images/" + currentValue.name + ".jpg"} alt={currentValue.name}/>
+                        <img src={currentValue.link()} alt={currentValue.name}/>
                     </li>
                 ))
                 }

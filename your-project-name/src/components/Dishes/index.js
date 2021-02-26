@@ -1,12 +1,16 @@
 import React, {useState} from "react";
 
 const initialDishes = [
-    { name: "jelly"}
+    { name: "jelly",
+      link: function(){
+        return "images/" + this.name + ".jpg"
+      }
+    }
 ]
 
 function Dishes (props) {
     const [dishes, setDishes] = useState(initialDishes)
-
+    console.log(initialDishes.name)
     return (
         <div>
             <h2>DISHES:</h2>
@@ -15,7 +19,7 @@ function Dishes (props) {
                 dishes.map(currentValue => (
                     <li key={currentValue.name}>
                         <p>{currentValue.name}</p>
-                        <img src={"images/" + currentValue.name + ".jpg"} alt={currentValue.name}/>
+                        <img src={currentValue.link()} alt={currentValue.name}/>
                     </li>
                 ))
                 }
