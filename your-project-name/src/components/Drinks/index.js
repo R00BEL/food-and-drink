@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 
-const drinks = ["green tea", "latte"]
+const initiaDrinks = [
+    { name: "green tea"},
+    { name: "latte"}
+]
+
 
 function Drinks (props) {
+    const [drinks, setDrinks] = useState(initiaDrinks)
+
     return (
         <div>
             <h2>DRINKS:</h2>
@@ -10,8 +16,8 @@ function Drinks (props) {
                 {
                 drinks.map(drinks => (
                     <li>
-                        <p>{drinks}</p>
-                        <img src={"images/" + drinks + ".jpg"}/>
+                        <p>{drinks.name}</p>
+                        <img src={"images/" + drinks.name + ".jpg"} alt={drinks.name}/>
                     </li>
                 ))
                 }

@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 
-const dishes = ["Jelly"]
+const initialDishes = [
+    { name: "jelly"},
+]
 
 function Dishes (props) {
+    const [dishes, setDishes] = useState(initialDishes)
+
     return (
         <div>
             <h2>DISHES:</h2>
@@ -10,8 +14,8 @@ function Dishes (props) {
                 {
                 dishes.map(dishes => (
                     <li>
-                        <p>{dishes}</p>
-                        <img src={"images/" + dishes + ".jpg"}/>
+                        <p>{dishes.name}</p>
+                        <img src={"images/" + dishes.name + ".jpg"} alt={dishes.name}/>
                     </li>
                 ))
                 }
