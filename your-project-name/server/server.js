@@ -3,6 +3,19 @@ import express from 'express'
 const app = express();
 const PORT = 3000;
 
+const initiaDrinks = [
+    { name: "green tea",
+      link: function(){
+        return "images/" + this.name + ".jpg"
+      }
+    },
+    { name: "latte",
+        link: function(){
+        return "images/" + this.name + ".jpg"
+      }
+    }
+]
+
 app.get("/greeting", function(request, response){
     let userName = request.query.name;
     response.send("Hello, " + userName)
@@ -10,6 +23,10 @@ app.get("/greeting", function(request, response){
 
 app.get("/helloyWord", function(request, response){
     response.json("helloy Word")
+});
+
+app.get("/drinks", function(request, response){
+    response.json(initiaDrinks)
 });
 
 app.listen(PORT, () => {
