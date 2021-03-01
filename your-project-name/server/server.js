@@ -4,16 +4,8 @@ const app = express();
 const PORT = 3000;
 
 const initiaDrinks = [
-    { name: "green tea",
-      link: function(){
-        return "images/" + this.name + ".jpg"
-      }
-    },
-    { name: "latte",
-        link: function(){
-        return "images/" + this.name + ".jpg"
-      }
-    }
+    { name: "green tea"},
+    { name: "latte"}
 ]
 
 app.get("/greeting", function(request, response){
