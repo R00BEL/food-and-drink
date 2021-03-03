@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-
-const initialDishes = [
-    { name: "jelly",
-      link: function(){
-        return "images/" + this.name + ".jpg"
-      }
-    }
-]
+import React, {useState, useEffect} from "react";
 
 function Dishes (props) {
-    const [dishes, setDishes] = useState(initialDishes)
-    console.log(initialDishes.name)
+    const [dishes, setDishes] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3002/dishes", {mode: 'cors'})
+            .then(response => response.json())
+            .then(data =>{
+                setDishes(data);
+            });
+      }, [])
+
     return (
         <div>
             <h2>DISHES:</h2>
@@ -19,7 +19,7 @@ function Dishes (props) {
                 dishes.map(currentValue => (
                     <li key={currentValue.name}>
                         <p>{currentValue.name}</p>
-                        <img src={currentValue.link()} alt={currentValue.name}/>
+                        <img src={currentValue.link} alt={currentValue.name}/>
                     </li>
                 ))
                 }

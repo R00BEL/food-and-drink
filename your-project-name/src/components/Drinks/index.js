@@ -1,22 +1,16 @@
-import React, {useState} from "react";
-
-const initiaDrinks = [
-    { name: "green tea",
-      link: function(){
-        return "images/" + this.name + ".jpg"
-      }
-    },
-    { name: "latte",
-        link: function(){
-        return "images/" + this.name + ".jpg"
-      }
-    }
-]
-
+import React, {useState, useEffect} from "react";
 
 function Drinks (props) {
-    const [drinks, setDrinks] = useState(initiaDrinks)
+    const [drinks, setDrinks] = useState([])
 
+    useEffect(() => {
+        fetch("http://localhost:3002/drinks", {mode: 'cors'})
+            .then(response => response.json())
+            .then(data =>{
+                setDrinks(data);
+            });
+      }, [])
+    
     return (
         <div>
             <h2>DRINKS:</h2>
@@ -25,7 +19,7 @@ function Drinks (props) {
                 drinks.map(currentValue => (
                     <li key={currentValue.name}>
                         <p>{currentValue.name}</p>
-                        <img src={currentValue.link()} alt={currentValue.name}/>
+                        <img src={currentValue.link} alt={currentValue.name}/>
                     </li>
                 ))
                 }
