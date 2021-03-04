@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
 function Drinks (props) {
-    const [drinks, setDrinks] = useState([])
+    const [drinks, setDrinks] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:3002/drinks", {mode: 'cors'})
