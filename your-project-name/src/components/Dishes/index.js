@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 
 function Dishes (props) {
     const [dishes, setDishes] = useState([]);
+    const [value, setValue] = useState("")
 
     useEffect(() => {
         fetch("http://localhost:3002/dishes", {mode: 'cors'})
@@ -9,7 +10,23 @@ function Dishes (props) {
             .then(data =>{
                 setDishes(data);
             });
-      }, [])
+      }, [value])
+
+    const change = useCallback((e)=>{
+        setValue(e.target.value)
+    }, [value])
+
+    const click = useCallback(()=>{
+        fetch('http://localhost:3002/addDishes', {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "name" : value,
+                "link": "images/crash.jpg"
+            }),
+        })
+        setValue("")
+    }, [value])
 
     return (
         <div>
@@ -24,6 +41,9 @@ function Dishes (props) {
                 ))
                 }
             </ul>
+            <p>add dishes:</p>
+            <input type="text" value={value} onChange={change}/>
+            <button onClick={click}>add</button>
         </div>
     )
 }

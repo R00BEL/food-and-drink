@@ -1,20 +1,9 @@
 {
-  "name": "my-server",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "nodemon server.js",
-    "start": "node server.js"
-  },
-  "author": "Roobel",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-  }
+    "name": "expressapp",
+    "version": "1.0.0",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.16.4"
+    }
 }
