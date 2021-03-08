@@ -8,42 +8,37 @@ app.use(bodyParser.json());
 
 const PORT = 3002;
 
-const drinks = [
-    { 
+const TYPES = {
+    DRINK: "drink",
+    DISH: "dishe"
+}
+
+const  foodAndDrinks = [
+    {
+        "type": TYPES.DRINK,
         "name": "green tea",
         "link": "images/green tea.jpg"
     },
-    { 
+    {
+        "type": TYPES.DRINK, 
         "name": "latte",
         "link": "images/latte.jpg"
-    }
-]
-
-const dishes = [
-    { 
+    },
+    {
+        "type": TYPES.DISH,
         "name": "jelly",
         "link": "images/jelly.jpg"
     }
 ]
 
-app.get("/drinks", function(request, response){
-    response.json(drinks)
+app.get("/foodAndDrinks", function(request, response){
+    response.json(foodAndDrinks)
 });
 
-app.get("/dishes", function(request, response){
-    response.json(dishes)
-});
-
-app.post("/addDrinks", function(request, response){
-    drinks.push(request.body);
+app.post("/addFoodAndDrinks", function(request, response){
+    foodAndDrinks.push(request.body);
     console.log("added to drinks: " + request.body.name);
 });
-
-app.post("/addDishes", function(request, response){
-    dishes.push(request.body);
-    console.log("added to dishes: " + request.body.name);
-});
-
 
 app.listen(PORT, () => {
     console.log(`server start woking on port ${PORT}...`);

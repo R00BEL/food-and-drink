@@ -1,26 +1,20 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useCallback} from "react";
+
+const URL = 'http://localhost:3002/addFoodAndDrinks'
 
 function Dishes (props) {
-    const [dishes, setDishes] = useState([]);
     const [value, setValue] = useState("")
-
-    useEffect(() => {
-        fetch("http://localhost:3002/dishes", {mode: 'cors'})
-            .then(response => response.json())
-            .then(data =>{
-                setDishes(data);
-            });
-      }, [value])
 
     const change = useCallback((e)=>{
         setValue(e.target.value)
     }, [value])
 
     const click = useCallback(()=>{
-        fetch('http://localhost:3002/addDishes', {
+        fetch(URL, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                "type": "dishe",
                 "name" : value,
                 "link": "images/crash.jpg"
             }),
@@ -33,7 +27,7 @@ function Dishes (props) {
             <h2>DISHES:</h2>
             <ul>
                 {
-                dishes.map(currentValue => (
+                props.data.map(currentValue => (
                     <li key={currentValue.name}>
                         <p>{currentValue.name}</p>
                         <img src={currentValue.link} alt={currentValue.name}/>

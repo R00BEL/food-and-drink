@@ -1,29 +1,20 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useCallback} from "react";
 
-const URL = 'http://localhost:3002/drinks'
-const data = { username: 'example' };
+const URL = 'http://localhost:3002/addFoodAndDrinks'
 
 function Drinks (props) {
-    const [drinks, setDrinks] = useState([]);
-    const [value, setValue] = useState("")
-
-    useEffect(() => {
-        fetch(URL, {mode: 'cors'})
-            .then(response => response.json())
-            .then(data =>{
-                setDrinks(data);
-            });
-      }, [value])
+    const [value, setValue] = useState("");
     
     const change = useCallback((e)=>{
         setValue(e.target.value)
     }, [value])
 
     const click = useCallback(()=>{
-        fetch('http://localhost:3002/addDrinks', {
+        fetch(URL, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                "type": "drink",
                 "name" : value,
                 "link": "images/crash.jpg"
             }),
@@ -36,7 +27,7 @@ function Drinks (props) {
             <h2>DRINKS:</h2>
             <ul>
                 {
-                drinks.map(currentValue => (
+                props.data.map(currentValue => (
                     <li key={currentValue.name}>
                         <p>{currentValue.name}</p>
                         <img src={currentValue.link} alt={currentValue.name}/>
