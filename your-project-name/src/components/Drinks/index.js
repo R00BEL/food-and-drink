@@ -7,7 +7,7 @@ function Drinks (props) {
     
     const change = useCallback((e)=>{
         setValue(e.target.value)
-    }, [value])
+    }, [])
 
     const click = useCallback(()=>{
         fetch(URL, {

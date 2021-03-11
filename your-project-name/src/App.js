@@ -1,6 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
+import {Route} from "wouter";
+
 import Dishes from "./components/Dishes/index.js";
 import Drinks from "./components/Drinks/index.js";
+import Nav from "./components/Nav/index.js";
 
 function App() {
   const [foodAndDrinks, setFoodAndDrinks] = useState([]);
@@ -12,14 +15,19 @@ function App() {
           setFoodAndDrinks(data);
         });
   })
-  
-  const drinks = foodAndDrinks.filter(currentValue => currentValue.type === "drink");
-  const dishes = foodAndDrinks.filter(currentValue => currentValue.type === "dishe");
+
+  const drinks = useMemo(() => foodAndDrinks.filter(currentValue => currentValue.type === "drink"), [foodAndDrinks])
+  const dishes = useMemo(() => foodAndDrinks.filter(currentValue => currentValue.type === "dishe"), [foodAndDrinks])
 
   return (
     <div>
-      <Dishes data={dishes}/>
-      <Drinks data={drinks}/>
+      <Nav/>
+      <Route path="/dishes">
+        <Dishes data={dishes}/>
+      </Route>
+      <Route path="/drinks">
+        <Drinks data={drinks}/>
+      </Route>
     </div>
   );
 }
