@@ -40,6 +40,14 @@ app.post("/addFoodAndDrinks", function(request, response){
     console.log("added to drinks: " + request.body.name);
 });
 
+app.post("/logIn", function(request, response){
+    if(request.body.login === "user" && request.body.password === "123"){
+        console.log("you entered");
+    } else {
+        console.log("Incorrect login or password");
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`server start woking on port ${PORT}...`);
 })

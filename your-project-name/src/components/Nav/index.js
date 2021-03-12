@@ -8,6 +8,7 @@ function Nav (props){
         <div>
             <Link href="/dishes"><a>dishes</a></Link>
             <Link href="/drinks"><a>drinks</a></Link>
+            <Link href="/logIn"><a>log in</a></Link>
         </div>
     )
 }

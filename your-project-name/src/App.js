@@ -4,6 +4,7 @@ import {Route} from "wouter";
 import Dishes from "./components/Dishes/index.js";
 import Drinks from "./components/Drinks/index.js";
 import Nav from "./components/Nav/index.js";
+import Account from "./components/Account/index.js";
 
 function App() {
   const [foodAndDrinks, setFoodAndDrinks] = useState([]);
@@ -27,6 +28,9 @@ function App() {
       </Route>
       <Route path="/drinks">
         <Drinks data={drinks}/>
+      </Route>
+      <Route path="/logIn">
+        <Account/>
       </Route>
     </div>
   );
