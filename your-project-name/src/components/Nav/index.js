@@ -9,6 +9,7 @@ function Nav (props){
             <Link href="/dishes"><a>dishes</a></Link>
             <Link href="/drinks"><a>drinks</a></Link>
             <Link href="/logIn"><a>log in</a></Link>
+            <Link href="/checkIn"><a>check in</a></Link>
         </div>
     )
 }

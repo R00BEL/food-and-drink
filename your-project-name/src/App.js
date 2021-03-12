@@ -5,6 +5,7 @@ import Dishes from "./components/Dishes/index.js";
 import Drinks from "./components/Drinks/index.js";
 import Nav from "./components/Nav/index.js";
 import Account from "./components/Account/index.js";
+import CheckIn from "./components/CheckIn/index.js";
 
 function App() {
   const [foodAndDrinks, setFoodAndDrinks] = useState([]);
@@ -31,6 +32,9 @@ function App() {
       </Route>
       <Route path="/logIn">
         <Account/>
+      </Route>
+      <Route path="/checkIn">
+        <CheckIn/>
       </Route>
     </div>
   );

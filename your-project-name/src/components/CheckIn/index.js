@@ -1,8 +1,8 @@
 import React, {useState, useCallback} from "react";
 
-const URL = 'http://localhost:3002/logIn'
+const URL = 'http://localhost:3002/checkIn'
 
-function Account (props){
+function CheckIn(props){
     const [valueLogin, setValueLogin] = useState("")
     const [valuePassword, setValuePassword] = useState("")
 
@@ -29,14 +29,14 @@ function Account (props){
 
     return(
         <div>
-            <h1>Sign in to your account:</h1>
+            <h1>Create a new account:</h1>
             <p>Login:</p>
             <input type="text" value={valueLogin} onChange={changeLogin}/>
             <p>Password:</p>
             <input type="text" value={valuePassword} onChange={changePassword}/>
-            <button onClick={click}>Sign in</button>
+            <button onClick={click}>Check In</button>
         </div>
     )
 }
 
-export default React.memo(Account);
+export default React.memo(CheckIn);

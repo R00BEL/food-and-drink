@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require('cors');
 const bodyParser = require("body-parser");
+const crypto = require("crypto");
+
+const sha256 = crypto.createHash("sha256");
 const app = express();
 
 app.use(cors());
@@ -29,7 +32,9 @@ const  foodAndDrinks = [
         "name": "jelly",
         "link": "images/jelly.jpg"
     }
-]
+];
+
+const accounts = [];
 
 app.get("/foodAndDrinks", function(request, response){
     response.json(foodAndDrinks)
@@ -41,11 +46,34 @@ app.post("/addFoodAndDrinks", function(request, response){
 });
 
 app.post("/logIn", function(request, response){
-    if(request.body.login === "user" && request.body.password === "123"){
-        console.log("you entered");
-    } else {
-        console.log("Incorrect login or password");
-    }
+    var userPassword = require('crypto')
+        .createHash('sha1')
+        .update(request.body.password + "SashaCrutou")
+        .digest('base64')
+
+    userName = accounts.find(
+        currentValue => request.body.login === currentValue.login && 
+        userPassword === currentValue.password
+    )
+
+    if (userName) console.log("Welcome " + userName.login)
+    else console.log('username or password entered incorrectly')
+});
+
+app.post("/checkIn", function(request, response){
+    var userPassword = require('crypto')
+        .createHash('sha1')
+        .update(request.body.password + "SashaCrutou")
+        .digest('base64')
+
+    accounts.push(
+        {
+            "login":request.body.login,
+            "password": userPassword
+        }
+    );
+
+    console.log(accounts);
 });
 
 app.listen(PORT, () => {
