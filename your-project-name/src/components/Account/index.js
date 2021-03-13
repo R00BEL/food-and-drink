@@ -23,6 +23,10 @@ function Account (props){
                 "password" : valuePassword
             }),
         })
+            .then(response => response.json())
+            .then(data =>{
+                localStorage.setItem("id", data.token);
+            });
         setValueLogin("")
         setValuePassword("")
     }, [valueLogin, valuePassword])

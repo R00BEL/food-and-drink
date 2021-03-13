@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require('cors');
 const bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken')
 const crypto = require("crypto");
 
-const sha256 = crypto.createHash("sha256");
 const app = express();
 
 app.use(cors());
@@ -36,6 +36,9 @@ const  foodAndDrinks = [
 
 const accounts = [];
 
+const SECRET = "SashaCrutou";
+const tokenKey = '1a2b-3c4d-5e6f-7g8h'
+
 app.get("/foodAndDrinks", function(request, response){
     response.json(foodAndDrinks)
 });
@@ -46,9 +49,9 @@ app.post("/addFoodAndDrinks", function(request, response){
 });
 
 app.post("/logIn", function(request, response){
-    var userPassword = require('crypto')
-        .createHash('sha1')
-        .update(request.body.password + "SashaCrutou")
+    const userPassword = crypto
+        .createHash('sha256')
+        .update(request.body.password + SECRET)
         .digest('base64')
 
     userName = accounts.find(
@@ -58,12 +61,16 @@ app.post("/logIn", function(request, response){
 
     if (userName) console.log("Welcome " + userName.login)
     else console.log('username or password entered incorrectly')
+    
+    response.json({
+        "token": jwt.sign({"id": accounts.login}, SECRET),
+    })
 });
 
 app.post("/checkIn", function(request, response){
-    var userPassword = require('crypto')
-        .createHash('sha1')
-        .update(request.body.password + "SashaCrutou")
+    const userPassword = crypto
+        .createHash("sha256")
+        .update(request.body.password + SECRET)
         .digest('base64')
 
     accounts.push(
