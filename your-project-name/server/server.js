@@ -54,16 +54,16 @@ app.post("/logIn", function(request, response){
         .update(request.body.password + SECRET)
         .digest('base64')
 
-    userName = accounts.find(
+    user = accounts.find(
         currentValue => request.body.login === currentValue.login && 
         userPassword === currentValue.password
     )
 
-    if (userName) console.log("Welcome " + userName.login)
+    if (user) console.log("Welcome " + user.login)
     else console.log('username or password entered incorrectly')
     
     response.json({
-        "token": jwt.sign({"id": accounts.login}, SECRET),
+        "token": jwt.sign({"id": user.id}, SECRET),
     })
 });
 
@@ -75,6 +75,7 @@ app.post("/checkIn", function(request, response){
 
     accounts.push(
         {
+            "id": accounts.length,
             "login":request.body.login,
             "password": userPassword
         }
