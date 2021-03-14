@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from "react";
 
-const URL = 'http://localhost:3002/logIn'
+const URL = 'http://localhost:3002/signIn'
 
 function Account (props){
     const [valueLogin, setValueLogin] = useState("")

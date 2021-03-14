@@ -37,9 +37,17 @@ const  foodAndDrinks = [
 const accounts = [];
 
 const SECRET = "SashaCrutou";
-const tokenKey = '1a2b-3c4d-5e6f-7g8h'
 
-app.get("/foodAndDrinks", function(request, response){
+app.use("/foodAndDrinks", function(request, response, next){
+    const token = request.headers.authorization
+    const payload = jwt.verify(token, SECRET)
+    user = accounts.find(currentValue => currentValue.id === payload.id)
+
+    if(user) next()
+    else return
+})
+
+app.post("/foodAndDrinks", function(request, response){
     response.json(foodAndDrinks)
 });
 
@@ -48,7 +56,7 @@ app.post("/addFoodAndDrinks", function(request, response){
     console.log("added to drinks: " + request.body.name);
 });
 
-app.post("/logIn", function(request, response){
+app.post("/signIn", function(request, response){
     const userPassword = crypto
         .createHash('sha256')
         .update(request.body.password + SECRET)
@@ -59,15 +67,17 @@ app.post("/logIn", function(request, response){
         userPassword === currentValue.password
     )
 
-    if (user) console.log("Welcome " + user.login)
+    if (user) {
+        console.log("Welcome " + user.login)
+        response.json({
+            "token": jwt.sign({"id": user.id}, SECRET),
+        })
+    }
     else console.log('username or password entered incorrectly')
-    
-    response.json({
-        "token": jwt.sign({"id": user.id}, SECRET),
-    })
+
 });
 
-app.post("/checkIn", function(request, response){
+app.post("/signUp", function(request, response){
     const userPassword = crypto
         .createHash("sha256")
         .update(request.body.password + SECRET)

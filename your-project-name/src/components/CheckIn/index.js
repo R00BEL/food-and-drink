@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from "react";
 
-const URL = 'http://localhost:3002/checkIn'
+const URL = 'http://localhost:3002/signUp'
 
 function CheckIn(props){
     const [valueLogin, setValueLogin] = useState("")
