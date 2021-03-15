@@ -12,13 +12,16 @@ function Dishes (props) {
     const click = useCallback(()=>{
         fetch(URL, {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 "type": "dishe",
                 "name" : value,
                 "link": "images/crash.jpg"
             }),
         })
+        props.setIndicator(value)
         setValue("")
     }, [value])
 

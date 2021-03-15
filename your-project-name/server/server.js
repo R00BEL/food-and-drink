@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken')
 const crypto = require("crypto");
+const { request, response } = require("express");
 
 const app = express();
 
@@ -18,37 +19,61 @@ const TYPES = {
 
 const  foodAndDrinks = [
     {
+        "id": 0,
         "type": TYPES.DRINK,
         "name": "green tea",
         "link": "images/green tea.jpg"
     },
     {
+        "id": 2,
         "type": TYPES.DRINK, 
         "name": "latte",
         "link": "images/latte.jpg"
     },
     {
+        "id": 2,
         "type": TYPES.DISH,
         "name": "jelly",
         "link": "images/jelly.jpg"
     }
 ];
 
-const accounts = [];
+const accounts = [
+    {
+        "id": 0,
+        "login": "user1",
+        "password": '0Ejzk8sU7HVLUhMmPbx/JkFgpNN6zYX3IxCJA8HblqI=' //123
+    },
+    {
+        "id": 1,
+        "login": "user2",
+        "password": '0Ejzk8sU7HVLUhMmPbx/JkFgpNN6zYX3IxCJA8HblqI=' //123
+    },
+    {
+        "id": 2,
+        "login": "user3",
+        "password": '0Ejzk8sU7HVLUhMmPbx/JkFgpNN6zYX3IxCJA8HblqI=' //123
+    }
+];
 
 const SECRET = "SashaCrutou";
 
-app.use("/foodAndDrinks", function(request, response, next){
-    const token = request.headers.authorization
+const south = function(request, response, next){
+    const authorization = request.headers.authorization.split(' ')
+    const token = authorization[1]
     const payload = jwt.verify(token, SECRET)
     user = accounts.find(currentValue => currentValue.id === payload.id)
 
-    if(user) next()
-    else return
-})
+    request.user = user
 
-app.post("/foodAndDrinks", function(request, response){
-    response.json(foodAndDrinks)
+    if(user) next()
+    else response.status(401).json({error: 'test'})
+}
+
+app.post("/foodAndDrinks", south, function(request, response){
+    const userFoodAndDrinks = foodAndDrinks.filter(currentValue => currentValue.id === request.user.id)
+
+    response.json(userFoodAndDrinks)
 });
 
 app.post("/addFoodAndDrinks", function(request, response){
