@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const { nanoid } = require('nanoid')
+const { nanoid } = require('nanoid');
 const crypto = require('crypto');
 
 const app = express();
@@ -61,13 +61,15 @@ const SECRET = 'SashaCrutou';
 const south = function (request, response, next) {
     const authorization = request.headers.authorization.split(' ');
     const token = authorization[1];
-    const payload = jwt.verify(token, SECRET);
-    user = accounts.find((currentValue) => currentValue.id === payload.id);
+    if (token !== 'null') {
+        const payload = jwt.verify(token, SECRET);
+        user = accounts.find((currentValue) => currentValue.id === payload.id);
 
-    request.user = user;
+        request.user = user;
+    }
 
-    if (user) next();
-    else response.status(401).json({ error: 'test' });
+    if (token !== 'null') next();
+    else response.status(401).json([{ error: 'log in or sign in to your account' }]);
 };
 
 app.post('/foodAndDrinks', south, function (request, response) {

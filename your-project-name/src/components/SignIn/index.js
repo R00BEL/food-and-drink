@@ -26,7 +26,7 @@ function SignIn(props) {
             .then((response) => response.json())
             .then((data) => {
                 localStorage.setItem('id', data.token);
-                props.setIndicator(data.token);
+                props.setIndicator(Math.random());
             });
         setValueLogin('');
         setValuePassword('');

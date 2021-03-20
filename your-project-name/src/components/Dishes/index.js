@@ -23,30 +23,26 @@ function Dishes(props) {
                 link: 'images/crash.jpg',
             }),
         });
-        props.setIndicator(value);
+        props.setIndicator(Math.random());
         setValue('');
-    }, [value]);
+    }, [value, props]);
 
     return (
         <div>
-            {props.data[0] ? (
-                <div>
-                    <h2>DISHES:</h2>
-                    <ul>
-                        {props.data.map((currentValue) => (
-                            <li key={currentValue.name}>
-                                <p>{currentValue.name}</p>
-                                <img src={currentValue.link} alt={currentValue.name} />
-                            </li>
-                        ))}
-                    </ul>
-                    <p>add dishes:</p>
-                    <input type="text" value={value} onChange={change} />
-                    <button onClick={click}>add</button>
-                </div>
-            ) : (
-                <p>log in or sign in to your account</p>
-            )}
+            <div>
+                <h2>DISHES:</h2>
+                <ul>
+                    {props.data.map((currentValue) => (
+                        <li key={currentValue.name}>
+                            <p>{currentValue.name}</p>
+                            <img src={currentValue.link} alt={currentValue.name} />
+                        </li>
+                    ))}
+                </ul>
+                <p>add dishes:</p>
+                <input type="text" value={value} onChange={change} />
+                <button onClick={click}>add</button>
+            </div>
         </div>
     );
 }

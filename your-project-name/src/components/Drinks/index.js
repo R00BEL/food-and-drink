@@ -23,30 +23,26 @@ function Drinks(props) {
                 link: 'images/crash.jpg',
             }),
         });
-        props.setIndicator(value);
+        props.setIndicator(Math.random());
         setValue('');
     }, [value]);
 
     return (
         <div>
-            {props.data[0] ? (
-                <div>
-                    <h2>DRINKS:</h2>
-                    <ul>
-                        {props.data.map((currentValue) => (
-                            <li key={currentValue.name}>
-                                <p>{currentValue.name}</p>
-                                <img src={currentValue.link} alt={currentValue.name} />
-                            </li>
-                        ))}
-                    </ul>
-                    <p>add drink:</p>
-                    <input type="text" value={value} onChange={change} />
-                    <button onClick={click}>add</button>
-                </div>
-            ) : (
-                <p>log in or sign in to your account</p>
-            )}
+            <div>
+                <h2>DRINKS:</h2>
+                <ul>
+                    {props.data.map((currentValue) => (
+                        <li key={currentValue.name}>
+                            <p>{currentValue.name}</p>
+                            <img src={currentValue.link} alt={currentValue.name} />
+                        </li>
+                    ))}
+                </ul>
+                <p>add drink:</p>
+                <input type="text" value={value} onChange={change} />
+                <button onClick={click}>add</button>
+            </div>
         </div>
     );
 }

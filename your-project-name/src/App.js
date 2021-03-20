@@ -12,12 +12,7 @@ const URL = 'http://localhost:3002/foodAndDrinks';
 function App() {
     const [foodAndDrinks, setFoodAndDrinks] = useState([]);
     const [indicator, setIndicator] = useState(0);
-
-    console.log(indicator);
-
-    const changeIndicator = useCallback(() => {
-        setIndicator(!indicator);
-    });
+    const [status, setStatus] = useState(true);
 
     useEffect(() => {
         fetch(URL, {
@@ -27,7 +22,10 @@ function App() {
                 Authorization: 'Bearer ' + localStorage.getItem('id'),
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                setStatus(response.ok);
+                return response.json();
+            })
             .then((data) => {
                 setFoodAndDrinks(data);
             });
@@ -46,16 +44,24 @@ function App() {
         <div>
             <Nav />
             <Route path="/dishes">
-                <Dishes data={dishes} setIndicator={setIndicator} />
+                {status ? (
+                    <Dishes data={dishes} setIndicator={setIndicator} />
+                ) : (
+                    <p>log in or sign in to your account</p>
+                )}
             </Route>
             <Route path="/drinks">
-                <Drinks data={drinks} setIndicator={setIndicator} />
+                {status ? (
+                    <Drinks data={drinks} setIndicator={setIndicator} />
+                ) : (
+                    <p>log in or sign in to your account</p>
+                )}
             </Route>
             <Route path="/signUp">
                 <SignUp />
             </Route>
             <Route path="/singIn">
-                <SingIn change={changeIndicator} setIndicator={setIndicator} />
+                <SingIn setIndicator={setIndicator} />
             </Route>
         </div>
     );
