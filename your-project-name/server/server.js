@@ -12,27 +12,28 @@ app.use(bodyParser.json());
 
 const PORT = 3002;
 
-const TYPES = {
-    DRINK: 'drink',
-    DISH: 'dishe',
-};
+const TYPES = [
+    { id: 'all', name: 'drinks' },
+    { id: 'all', name: 'dishes' },
+    { id: 2, name: 'dessert' },
+];
 
 const foodAndDrinks = [
     {
         id: 0,
-        type: TYPES.DRINK,
+        type: 'drink',
         name: 'green tea',
         link: 'images/green tea.jpg',
     },
     {
         id: 2,
-        type: TYPES.DRINK,
+        type: 'drink',
         name: 'latte',
         link: 'images/latte.jpg',
     },
     {
         id: 2,
-        type: TYPES.DISH,
+        type: 'dishe',
         name: 'jelly',
         link: 'images/jelly.jpg',
     },
@@ -69,7 +70,7 @@ const south = function (request, response, next) {
     }
 
     if (token !== 'null') next();
-    else response.status(401).json([{ error: 'log in or sign in to your account' }]);
+    else response.status(401).json([]);
 };
 
 app.post('/foodAndDrinks', south, function (request, response) {
@@ -84,7 +85,22 @@ app.post('/addFoodAndDrinks', south, function (request, response) {
     request.body.id = request.user.id;
 
     foodAndDrinks.push(request.body);
-    console.log('added to drinks: ' + request.body.name);
+    console.log('added in foodAndDrinks: ' + request.body.name);
+});
+
+app.get('/types', south, function (request, response) {
+    const userTypes = TYPES.filter(
+        (currentValue) => currentValue.id === request.user.id || currentValue.id === 'all',
+    );
+
+    response.json(userTypes);
+});
+
+app.post('/addTypes', south, function (request, response) {
+    request.body.id = request.user.id;
+    TYPES.push(request.body);
+
+    console.log('added in types: ' + request.body.name);
 });
 
 app.post('/signIn', function (request, response) {

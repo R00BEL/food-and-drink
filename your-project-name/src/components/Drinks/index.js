@@ -23,6 +23,7 @@ function Drinks(props) {
                 link: 'images/crash.jpg',
             }),
         });
+
         props.setIndicator(Math.random());
         setValue('');
     }, [value]);

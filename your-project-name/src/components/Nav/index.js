@@ -6,17 +6,20 @@ import './index.css';
 function Nav(props) {
     return (
         <div>
-            <Link href="/dishes">
-                <a>dishes</a>
-            </Link>
-            <Link href="/drinks">
-                <a>drinks</a>
-            </Link>
+            {props.status &&
+                props.tupes.map((currentValue) => (
+                    <Link href={currentValue.name} key={currentValue.name}>
+                        <a>{currentValue.name}</a>
+                    </Link>
+                ))}
             <Link href="/singIn">
                 <a>sign in</a>
             </Link>
             <Link href="/signUp">
                 <a>sign up</a>
+            </Link>
+            <Link href="/setting">
+                <a>setting</a>
             </Link>
         </div>
     );

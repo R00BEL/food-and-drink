@@ -6,13 +6,30 @@ import Drinks from './components/Drinks/index.js';
 import Nav from './components/Nav/index.js';
 import SignUp from './components/SignUp/index.js';
 import SingIn from './components/SignIn/index.js';
+import Setting from './components/Setting/index.js';
 
 const URL = 'http://localhost:3002/foodAndDrinks';
+const urlTypes = 'http://localhost:3002/types';
 
 function App() {
     const [foodAndDrinks, setFoodAndDrinks] = useState([]);
+    const [types, setTypes] = useState([]);
     const [indicator, setIndicator] = useState(0);
     const [status, setStatus] = useState(true);
+
+    useEffect(() => {
+        fetch(urlTypes, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('id'),
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setTypes(data);
+            });
+    }, [indicator]);
 
     useEffect(() => {
         fetch(URL, {
@@ -42,7 +59,7 @@ function App() {
 
     return (
         <div>
-            <Nav />
+            <Nav tupes={types} status={status} />
             <Route path="/dishes">
                 {status ? (
                     <Dishes data={dishes} setIndicator={setIndicator} />
@@ -62,6 +79,13 @@ function App() {
             </Route>
             <Route path="/singIn">
                 <SingIn setIndicator={setIndicator} />
+            </Route>
+            <Route path="/setting">
+                {status ? (
+                    <Setting setIndicator={setIndicator} />
+                ) : (
+                    <p>log in or sign in to your account</p>
+                )}
             </Route>
         </div>
     );
