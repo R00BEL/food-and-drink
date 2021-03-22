@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Route } from 'wouter';
 
-import Dishes from './components/Dishes/index.js';
-import Drinks from './components/Drinks/index.js';
 import Nav from './components/Nav/index.js';
 import SignUp from './components/SignUp/index.js';
 import SingIn from './components/SignIn/index.js';
@@ -48,13 +46,6 @@ function App() {
                 setlists(data);
             });
     }, [indicator]);
-
-    const drinks = useMemo(() => lists.filter((currentValue) => currentValue.type === 'drink'), [
-        lists,
-    ]);
-    const dishes = useMemo(() => lists.filter((currentValue) => currentValue.type === 'dishe'), [
-        lists,
-    ]);
 
     return (
         <div>
