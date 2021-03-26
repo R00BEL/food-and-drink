@@ -85,6 +85,7 @@ app.post('/addFoodAndDrinks', south, function (request, response) {
     request.body.id = request.user.id;
 
     foodAndDrinks.push(request.body);
+
     console.log('added in foodAndDrinks: ' + request.body.name);
 });
 

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import ImageUploader from 'react-images-upload';
 import { useRoute } from 'wouter';
 
 const URL = 'http://localhost:3002/addFoodAndDrinks';
@@ -6,10 +7,19 @@ const URL = 'http://localhost:3002/addFoodAndDrinks';
 function Article(props) {
     const [value, setValue] = useState('');
     const [match, params] = useRoute('/:id');
+    const [pictures, setPictures] = useState('');
 
     const change = useCallback((e) => {
         setValue(e.target.value);
     }, []);
+
+    const onDrop = (picture) => {
+        var reader = new FileReader();
+        reader.readAsDataURL(picture[0]);
+        reader.onload = function (e) {
+            setPictures(reader.result);
+        };
+    };
 
     const click = useCallback(() => {
         fetch(URL, {
@@ -22,18 +32,21 @@ function Article(props) {
                 id: '',
                 type: params.id,
                 name: value,
-                link: 'images/crash.jpg',
+                link: pictures,
             }),
         });
         props.setIndicator(Math.random());
         setValue('');
     }, [value]);
 
-    const preference = props.data.filter((currentValue) => currentValue.type === params.id);
+    let preference = [];
+    if (match) {
+        preference = props.data.filter((currentValue) => currentValue.type === params.id);
+    }
 
     return (
         <div>
-            {props.types.find((currentValue) => currentValue.name === params.id) && match && (
+            {match && props.types.find((currentValue) => currentValue.name === params.id) && (
                 <div>
                     <h2>{params.id}:</h2>
                     <ul>
@@ -47,6 +60,12 @@ function Article(props) {
                     <p>add {params.id}:</p>
                     <input type="text" value={value} onChange={change} />
                     <button onClick={click}>add</button>
+                    <ImageUploader
+                        onChange={onDrop}
+                        buttonText="Choose images"
+                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                        withPreview="true"
+                    />
                 </div>
             )}
         </div>

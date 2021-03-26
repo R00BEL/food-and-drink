@@ -7,19 +7,10 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
     "express": "^4.17.1",
-    "babel-eslint": "^8.2.3",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-config-jest-enzyme": "^6.0.2",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jest": "^21.18.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.9.1",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-images-upload": "^1.2.8",
     "react-scripts": "^4.0.3",
     "web-vitals": "^1.1.0",
     "wouter": "^2.7.4"
@@ -29,9 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write **/*.js",
-    "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
+    "prettier": "prettier --write **/*.js"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +46,5 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^7.22.0"
   }
 }
