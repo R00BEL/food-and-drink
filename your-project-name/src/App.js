@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import axios from 'axios';
 import { Route } from 'wouter';
 
 import Nav from './components/Nav/index.js';
@@ -7,8 +8,8 @@ import SingIn from './components/SignIn/index.js';
 import Setting from './components/Setting/index.js';
 import Article from './components/Article/index.js';
 
-const URL = 'http://localhost:3002/foodAndDrinks';
-const urlTypes = 'http://localhost:3002/types';
+const URL = 'http://localhost:3001/lists';
+const urlTypes = 'http://localhost:3001/types';
 
 function App() {
     const [lists, setlists] = useState([]);
@@ -32,7 +33,7 @@ function App() {
 
     useEffect(() => {
         fetch(URL, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + localStorage.getItem('id'),
@@ -45,6 +46,21 @@ function App() {
             .then((data) => {
                 setlists(data);
             });
+        
+        // axios({
+        //     method: 'get',
+        //     url: URL,
+        //     headers: {
+        //         'Authorization': 'Bearer ' + localStorage.getItem('id')
+        //     }
+        // })
+        //     .then(function (response) {
+        //         console.log(response)
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error? 1: 2);
+        //       })
+
     }, [indicator]);
 
     return (

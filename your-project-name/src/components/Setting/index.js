@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-const URL = 'http://localhost:3002/addTypes';
+const URL = 'http://localhost:3001/types';
 
 function Setting(props) {
     const [value, setValue] = useState('');

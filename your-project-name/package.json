@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
@@ -44,7 +45,5 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-  }
+  "license": "ISC"
 }

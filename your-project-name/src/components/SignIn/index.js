@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
+import axios from 'axios';
 
-const URL = 'http://localhost:3002/signIn';
+const URL = 'http://localhost:3001/accounts/signIn';
 
 function SignIn(props) {
     const [valueLogin, setValueLogin] = useState('');
@@ -15,19 +16,19 @@ function SignIn(props) {
     }, []);
 
     const click = useCallback(() => {
-        fetch(URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                login: valueLogin,
-                password: valuePassword,
-            }),
+        axios.post(URL, {
+            login: valueLogin,
+            password: valuePassword,
         })
-            .then((response) => response.json())
-            .then((data) => {
-                localStorage.setItem('id', data.token);
+            .then(function (response) {
+                console.log(response)
+                localStorage.setItem('id', response.data.token);
                 props.setIndicator(Math.random());
-            });
+        })
+        .catch(function (error) {
+            console.log(error);
+          });
+
         setValueLogin('');
         setValuePassword('');
     }, [valueLogin, valuePassword]);

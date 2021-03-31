@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import ImageUploader from 'react-images-upload';
 import { useRoute } from 'wouter';
 
-const URL = 'http://localhost:3002/addFoodAndDrinks';
+const URL = 'http://localhost:3001/lists';
 
 function Article(props) {
     const [value, setValue] = useState('');

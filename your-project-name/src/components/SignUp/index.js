@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
+import axios from 'axios';
 
-const URL = 'http://localhost:3002/signUp';
+const URL = 'http://localhost:3001/accounts/signUp';
 
 function SignUp(props) {
     const [valueLogin, setValueLogin] = useState('');
@@ -15,14 +16,16 @@ function SignUp(props) {
     }, []);
 
     const click = useCallback(() => {
-        fetch(URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
+        axios({
+            method: 'post',
+            url: URL,
+            data: {
+                id: "",
                 login: valueLogin,
                 password: valuePassword,
-            }),
-        });
+            }
+          });
+
         setValueLogin('');
         setValuePassword('');
     }, [valueLogin, valuePassword]);
