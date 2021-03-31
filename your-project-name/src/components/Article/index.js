@@ -15,10 +15,12 @@ function Article(props) {
 
     const onDrop = (picture) => {
         var reader = new FileReader();
-        reader.readAsDataURL(picture[0]);
-        reader.onload = function (e) {
-            setPictures(reader.result);
-        };
+        if (picture[0]) {
+            reader.readAsDataURL(picture[0]);
+            reader.onload = function (e) {
+                setPictures(reader.result);
+            };
+        }
     };
 
     const click = useCallback(() => {
@@ -65,6 +67,7 @@ function Article(props) {
                         buttonText="Choose images"
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
                         withPreview="true"
+                        singleImage="false"
                     />
                 </div>
             )}

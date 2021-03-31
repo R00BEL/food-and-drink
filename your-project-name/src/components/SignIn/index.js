@@ -21,13 +21,9 @@ function SignIn(props) {
             password: valuePassword,
         })
             .then(function (response) {
-                console.log(response)
                 localStorage.setItem('id', response.data.token);
                 props.setIndicator(Math.random());
         })
-        .catch(function (error) {
-            console.log(error);
-          });
 
         setValueLogin('');
         setValuePassword('');

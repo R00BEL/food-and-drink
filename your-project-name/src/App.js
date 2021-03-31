@@ -15,53 +15,50 @@ function App() {
     const [lists, setlists] = useState([]);
     const [types, setTypes] = useState([]);
     const [indicator, setIndicator] = useState(0);
-    const [status, setStatus] = useState(true);
+    const [status, setStatus] = useState(0);
 
     useEffect(() => {
-        fetch(urlTypes, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('id'),
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setTypes(data);
-            });
-    }, [indicator]);
-
-    useEffect(() => {
-        fetch(URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('id'),
-            },
-        })
-            .then((response) => {
-                setStatus(response.ok);
-                return response.json();
-            })
-            .then((data) => {
-                setlists(data);
-            });
-        
-        // axios({
-        //     method: 'get',
-        //     url: URL,
+        // fetch(urlTypes, {
+        //     method: 'GET',
         //     headers: {
-        //         'Authorization': 'Bearer ' + localStorage.getItem('id')
-        //     }
+        //         'Content-Type': 'application/json',
+        //         Authorization: 'Bearer ' + localStorage.getItem('id'),
+        //     },
         // })
-        //     .then(function (response) {
-        //         console.log(response)
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error? 1: 2);
-        //       })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         setTypes(data);
+        //     });
+
+        axios({
+            method: 'get',
+            url: urlTypes,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('id')
+            }
+        })
+            .then(function (response) {
+                setTypes(response.data);
+            })
+    }, [indicator]);
+
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: URL,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('id')
+            }
+        })
+            .then(function (response) {
+                console.log(response)
+                setlists(response.data)
+                setStatus(response.status)
+            })
 
     }, [indicator]);
+
+    console.log(status)
 
     return (
         <div>

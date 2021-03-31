@@ -6,7 +6,6 @@ import { secret } from 'src/pseudo_database/secret';
 @Injectable()
 export class ListsMiddleware implements NestMiddleware {
   use(req: any, res: any, next: () => void) {
-    console.log(req.headers)
     const authorization = req.headers.authorization.split(' ');
     const token = authorization[1];
     if (token !== 'null') {
