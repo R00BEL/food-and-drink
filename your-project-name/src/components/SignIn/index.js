@@ -23,7 +23,10 @@ function SignIn(props) {
             .then(function (response) {
                 localStorage.setItem('id', response.data.token);
                 props.setIndicator(Math.random());
-        })
+            })  
+            .catch(function (error) {
+                console.log(error);
+            });
 
         setValueLogin('');
         setValuePassword('');

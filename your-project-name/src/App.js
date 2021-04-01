@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import { Route } from 'wouter';
 
@@ -9,7 +9,7 @@ import Setting from './components/Setting/index.js';
 import Article from './components/Article/index.js';
 
 const URL = 'http://localhost:3001/lists';
-const urlTypes = 'http://localhost:3001/types';
+const urlTypes = 'http://localhost:3001/category';
 
 function App() {
     const [lists, setlists] = useState([]);
@@ -18,18 +18,6 @@ function App() {
     const [status, setStatus] = useState(0);
 
     useEffect(() => {
-        // fetch(urlTypes, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Authorization: 'Bearer ' + localStorage.getItem('id'),
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         setTypes(data);
-        //     });
-
         axios({
             method: 'get',
             url: urlTypes,
@@ -40,6 +28,10 @@ function App() {
             .then(function (response) {
                 setTypes(response.data);
             })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }, [indicator]);
 
     useEffect(() => {
@@ -51,14 +43,14 @@ function App() {
             }
         })
             .then(function (response) {
-                console.log(response)
                 setlists(response.data)
                 setStatus(response.status)
             })
+            .catch(function (error) {
+                console.log(error);
+            });
 
     }, [indicator]);
-
-    console.log(status)
 
     return (
         <div>

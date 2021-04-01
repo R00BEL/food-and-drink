@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
+import { STATUS_CODES } from 'node:http';
 import { accounts } from 'src/pseudo_database/accounts';
 import { secret } from 'src/pseudo_database/secret';
 const crypto = require('crypto');
@@ -26,7 +27,10 @@ export class AccountsService {
       console.log("token " + jwt.sign({ id: user.id }, secret))
       return {token: jwt.sign({ id: user.id }, secret)}
     }
-    else console.log('username or password entered incorrectly');
+    else {
+      console.log('username or password entered incorrectly');
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND)
+    }
   }
 
   signUp(createAccountDto: CreateAccountDto) {

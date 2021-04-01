@@ -1,4 +1,5 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
+import { NextFunction } from 'express';
 const jwt = require('jsonwebtoken');
 import { accounts } from 'src/pseudo_database/accounts';
 import { secret } from 'src/pseudo_database/secret';
@@ -12,10 +13,13 @@ export class ListsMiddleware implements NestMiddleware {
       const payload = jwt.verify(token, secret);
       let user = accounts.find((currentValue) => currentValue.id === payload.id);
 
-      req.user = user;
+      if (user) {
+        process.env.USER_ID = user.id
+        next();
+        return;
+      }
     }
 
-    if (token !== 'null') next();
-    else res.status(401).json([]);
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
   }
 }

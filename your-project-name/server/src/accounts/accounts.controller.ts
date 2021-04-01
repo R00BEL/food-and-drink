@@ -4,7 +4,7 @@ import { CreateAccountDto } from './dto/create-account.dto';
 
 @Controller('accounts')
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(private readonly accountsService: AccountsService,) {}
 
   @Post('signIn')
   signIn(@Body() createAccountDto: CreateAccountDto) {

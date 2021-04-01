@@ -8,7 +8,7 @@ function Nav(props) {
         <div>
             {props.status &&
                 props.tupes.map((currentValue) => (
-                    <Link href={currentValue.name} key={currentValue.name}>
+                    <Link href={currentValue.name} key={Math.random()}>
                         <a>{currentValue.name}</a>
                     </Link>
                 ))}

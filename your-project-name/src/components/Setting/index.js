@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-const URL = 'http://localhost:3001/types';
+const URL = 'http://localhost:3001/category';
 
 function Setting(props) {
     const [value, setValue] = useState('');
@@ -28,7 +28,7 @@ function Setting(props) {
 
     return (
         <div>
-            <p>Add new menu:</p>
+            <p>Add new category:</p>
             <input type="text" value={value} onChange={change} />
             <button onClick={click}>add</button>
         </div>

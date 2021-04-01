@@ -4,16 +4,16 @@ import { lists } from 'src/pseudo_database/lists';
 @Injectable()
 export class ListsService {
 
-    listAll(req) {
+    listAll() {
         const userLists = lists.filter(
-            (currentValue) => currentValue.id === req.user.id,
+            (currentValue) => currentValue.id === process.env.USER_ID,
         );
 
         return userLists
     }
 
-    listAdd(listsDto, req) {
-        listsDto.id = req.user.id;
+    listAdd(listsDto) {
+        listsDto.id = process.env.USER_ID;
 
 
         lists.push(listsDto)
