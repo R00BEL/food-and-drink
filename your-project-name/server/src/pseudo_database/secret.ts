@@ -1,1 +1,0 @@
-export let secret = 'SashaCrutou';

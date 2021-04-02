@@ -1,16 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
-import { STATUS_CODES } from 'node:http';
 import { accounts } from 'src/pseudo_database/accounts';
-import { secret } from 'src/pseudo_database/secret';
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-import { CreateAccountDto } from './dto/create-account.dto';
 
 @Injectable()
 export class AccountsService {
 
-  signIn(createAccountDto: CreateAccountDto) {
+  signIn(createAccountDto, secret) {
     const userPassword = crypto
     .createHash('sha256')
     .update(createAccountDto.password + secret)
@@ -33,7 +30,7 @@ export class AccountsService {
     }
   }
 
-  signUp(createAccountDto: CreateAccountDto) {
+  signUp(createAccountDto, secret) {
     const userPassword = crypto
     .createHash('sha256')
     .update(createAccountDto.password + secret)

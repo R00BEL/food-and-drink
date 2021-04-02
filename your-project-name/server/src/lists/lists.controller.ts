@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { CreateListDto } from './dto/Create-list.dto';
 import { ListsService } from './lists.service';
 
@@ -7,13 +7,15 @@ export class ListsController {
     constructor(private listServise: ListsService){}
     
     @Get()
-    listAll() {
-        return this.listServise.listAll();
+    listAll(@Req() req) {
+        const userId: string = req.USER_ID
+        return this.listServise.listAll(userId);
     }
 
     @Post()
-    listAdd(@Body() createListDto: CreateListDto) {
-        this.listServise.listAdd(createListDto);
+    listAdd(@Body() createListDto: CreateListDto, @Req() req) {
+        const userId: string = req.USER_ID
+        this.listServise.listAdd(createListDto, userId);
     }
 
 }

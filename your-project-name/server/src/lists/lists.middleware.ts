@@ -1,12 +1,14 @@
 import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
-import { NextFunction } from 'express';
+import { ConfigService } from '@nestjs/config';
 const jwt = require('jsonwebtoken');
 import { accounts } from 'src/pseudo_database/accounts';
-import { secret } from 'src/pseudo_database/secret';
 
 @Injectable()
 export class ListsMiddleware implements NestMiddleware {
+  constructor(private configService: ConfigService) {}
+  
   use(req: any, res: any, next: () => void) {
+    const secret = this.configService.get('SECRET')
     const authorization = req.headers.authorization.split(' ');
     const token = authorization[1];
     if (token !== 'null') {
@@ -14,7 +16,7 @@ export class ListsMiddleware implements NestMiddleware {
       let user = accounts.find((currentValue) => currentValue.id === payload.id);
 
       if (user) {
-        process.env.USER_ID = user.id
+        req.USER_ID = user.id
         next();
         return;
       }

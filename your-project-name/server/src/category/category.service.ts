@@ -3,16 +3,16 @@ import { categorys } from 'src/pseudo_database/categorys';
 
 @Injectable()
 export class CategoryService {
-  categoryAll() {
+  categoryAll(userId) {
     const userTypes = categorys.filter(
-        (currentValue) => currentValue.id === process.env.USER_ID || currentValue.id === 'all',
+        (currentValue) => currentValue.id === userId || currentValue.id === 'all',
     );
 
     return userTypes
 }
 
-categoryAdd(listsDto) {
-    listsDto.id = process.env.USER_ID;
+categoryAdd(listsDto, userId) {
+    listsDto.id = userId;
 
     categorys.push(listsDto)
 
