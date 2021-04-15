@@ -1,28 +1,25 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { nanoid } from 'nanoid';
-import { accounts } from 'src/pseudo_database/accounts';
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 @Injectable()
 export class AccountsService {
+  private logger = new Logger('controller');
 
-  signIn(createAccountDto, secret) {
+  async signIn(createAccountDto, secret, pg) {
     const userPassword = crypto
     .createHash('sha256')
     .update(createAccountDto.password + secret)
     .digest('base64');
+    
+    let user = await pg.any(`select * from accounts where login = '${createAccountDto.login}' and password = '${userPassword}'`)
 
-    let user = accounts.find(
-      (currentValue) =>
-          createAccountDto.login === currentValue.login && userPassword === currentValue.password,  
-    );
-
-    if (user) {
-      console.log('Welcome ' + user.login);
+    if (user.length) {
+      console.log('Welcome ' + createAccountDto.login);
       console.log(user)
-      console.log("token " + jwt.sign({ id: user.id }, secret))
-      return {token: jwt.sign({ id: user.id }, secret)}
+      console.log("token " + jwt.sign({ id: user[0].userid }, secret))
+      return {token: jwt.sign({ id: user[0].userid }, secret)}
     }
     else {
       console.log('username or password entered incorrectly');
@@ -30,20 +27,15 @@ export class AccountsService {
     }
   }
 
-  signUp(createAccountDto, secret) {
+  async signUp(createAccountDto, secret, pg) {
     const userPassword = crypto
     .createHash('sha256')
     .update(createAccountDto.password + secret)
     .digest('base64');
 
-    accounts.push({
-      id: nanoid(),
-      login: createAccountDto.login,
-      password: userPassword,
-  });
+    pg.any(`insert into accounts(userId, login, password) values ('${nanoid()}', '${createAccountDto.login}', '${userPassword}')`)
 
     console.log('add account ' + createAccountDto.login)
-    return accounts;
   }
 
 }

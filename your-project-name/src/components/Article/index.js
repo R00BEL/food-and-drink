@@ -16,12 +16,12 @@ function Article(props) {
 
     const onDrop = (picture) => {
         var reader = new FileReader();
-        console.log(picture)
-        console.log(picture[0])
         if (picture[0]) {
             reader.readAsDataURL(picture[0]);
             reader.onload = function (e) {
                 setPictures(reader.result);
+                props.setIndicator(Math.random() * Math.random() * Math.random());
+                picture = '';
             };
         }
     };
@@ -31,35 +31,35 @@ function Article(props) {
             method: 'post',
             url: URL,
             headers: {
-                "Authorization": 'Bearer ' + localStorage.getItem('id')
+                Authorization: 'Bearer ' + localStorage.getItem('id'),
             },
             data: {
-                id: '',
-                type: params.id,
+                category: params.id,
                 name: value,
-                link: pictures,
-            }
-          });
-
-        props.setIndicator(Math.random());
-        setValue('');
+                photo: pictures,
+            },
+        })
+            .then(() => {
+                props.setIndicator(Math.random() * Math.random() * Math.random());
+                setValue('');
+            })
     }, [value]);
 
     let preference = [];
     if (match) {
-        preference = props.data.filter((currentValue) => currentValue.type === params.id);
+        preference = props.data.filter((currentValue) => currentValue.category === params.id);
     }
 
     return (
         <div>
-            {match && props.types.find((currentValue) => currentValue.name === params.id) && (
+            {match && props.types.find((currentValue) => currentValue.category === params.id) && (
                 <div>
                     <h2>{params.id}:</h2>
                     <ul>
                         {preference.map((currentValue) => (
                             <li key={Math.random()}>
                                 <p>{currentValue.name}</p>
-                                <img src={currentValue.link} alt={currentValue.name} />
+                                <img src={currentValue.photo} alt={currentValue.name} />
                             </li>
                         ))}
                     </ul>

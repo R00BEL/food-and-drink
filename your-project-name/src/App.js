@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Route } from 'wouter';
 
@@ -22,8 +22,8 @@ function App() {
             method: 'get',
             url: urlTypes,
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('id')
-            }
+                Authorization: 'Bearer ' + localStorage.getItem('id'),
+            },
         })
             .then(function (response) {
                 setTypes(response.data);
@@ -31,7 +31,6 @@ function App() {
             .catch(function (error) {
                 console.log(error);
             });
-
     }, [indicator]);
 
     useEffect(() => {
@@ -39,17 +38,16 @@ function App() {
             method: 'get',
             url: URL,
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('id')
-            }
+                Authorization: 'Bearer ' + localStorage.getItem('id'),
+            },
         })
             .then(function (response) {
-                setlists(response.data)
-                setStatus(response.status)
+                setlists(response.data);
+                setStatus(response.status);
             })
             .catch(function (error) {
                 console.log(error);
             });
-
     }, [indicator]);
 
     return (

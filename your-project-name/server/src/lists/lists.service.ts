@@ -1,25 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { lists } from 'src/pseudo_database/lists';
 
 @Injectable()
 export class ListsService {
 
-    listAll(userId) {
-        const userLists = lists.filter(
-            (currentValue) => currentValue.id === userId,
-        );
-
-        return userLists
+    async listAll(userId, pg) {
+        return pg.any(`select category, name, photo from lists where userid = '${userId}'`)
     }
 
-    listAdd(listsDto, userId) {
-        listsDto.id = userId;
-
-
-        lists.push(listsDto)
-
-        console.log('add in account: ')
-        console.log(listsDto)
+    async listAdd(listsDto, userId, pg) {
+		pg.any(`insert into lists(userId, category, name, photo) values ('${userId}', '${listsDto.category}', '${listsDto.name}', '${listsDto.photo}')`);
     }
 
 }

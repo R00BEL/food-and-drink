@@ -1,22 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { categorys } from 'src/pseudo_database/categorys';
 
 @Injectable()
 export class CategoryService {
-  categoryAll(userId) {
-    const userTypes = categorys.filter(
-        (currentValue) => currentValue.id === userId || currentValue.id === 'all',
-    );
+  async categoryAll(userId, pg) {
+    return pg.any(`select category from category_user where userid = '${userId}'`)
+	}
 
-    return userTypes
-}
+	async categoryAdd(listsDto, userId, pg) {
+		listsDto.id = userId;
 
-categoryAdd(listsDto, userId) {
-    listsDto.id = userId;
+		const checkForExistence = await pg.any(`select * from categories where category = '${listsDto.name}' limit 1`);
+		if(!checkForExistence.length) pg.any(`insert into categories(category) values('${listsDto.name}')`);
 
-    categorys.push(listsDto)
-
-    return  categorys
-}
-
+		pg.any(`insert into category_user(userId, category) values('${listsDto.id}', '${listsDto.name}')`);
+	}
 }

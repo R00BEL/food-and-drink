@@ -16,14 +16,15 @@ function SignIn(props) {
     }, []);
 
     const click = useCallback(() => {
-        axios.post(URL, {
-            login: valueLogin,
-            password: valuePassword,
-        })
+        axios
+            .post(URL, {
+                login: valueLogin,
+                password: valuePassword,
+            })
             .then(function (response) {
                 localStorage.setItem('id', response.data.token);
-                props.setIndicator(Math.random());
-            })  
+                props.setIndicator(Math.random() * Math.random() * Math.random());
+            })
             .catch(function (error) {
                 console.log(error);
             });

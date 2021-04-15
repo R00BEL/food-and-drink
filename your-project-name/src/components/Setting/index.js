@@ -20,10 +20,11 @@ function Setting(props) {
                 id: '',
                 name: value,
             }),
-        });
-
-        props.setIndicator(Math.random());
-        setValue('');
+        })
+            .then(() => {
+                props.setIndicator(Math.random() * Math.random() * Math.random());
+                setValue('');
+            })
     }, [value]);
 
     return (

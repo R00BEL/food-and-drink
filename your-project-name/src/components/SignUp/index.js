@@ -20,11 +20,11 @@ function SignUp(props) {
             method: 'post',
             url: URL,
             data: {
-                id: "",
+                id: '',
                 login: valueLogin,
                 password: valuePassword,
-            }
-          });
+            },
+        });
 
         setValueLogin('');
         setValuePassword('');

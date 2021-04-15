@@ -8,8 +8,8 @@ function Nav(props) {
         <div>
             {props.status &&
                 props.tupes.map((currentValue) => (
-                    <Link href={currentValue.name} key={Math.random()}>
-                        <a>{currentValue.name}</a>
+                    <Link href={currentValue.category} key={Math.random()}>
+                        <a>{currentValue.category}</a>
                     </Link>
                 ))}
             <Link href="/singIn">
