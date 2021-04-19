@@ -5,12 +5,10 @@ import { CategoryMiddleware } from './category.middleware';
 
 @Module({
   controllers: [CategoryController],
-  providers: [CategoryService]
+  providers: [CategoryService],
 })
 export class CategoryModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CategoryMiddleware)
-      .forRoutes('category');
+    consumer.apply(CategoryMiddleware).forRoutes('category');
   }
 }

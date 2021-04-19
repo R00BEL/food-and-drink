@@ -4,13 +4,11 @@ import { ListsMiddleware } from './lists.middleware';
 import { ListsService } from './lists.service';
 
 @Module({
-    controllers: [ListsController],
-    providers: [ListsService],
+  controllers: [ListsController],
+  providers: [ListsService],
 })
 export class ListsModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-      consumer
-        .apply(ListsMiddleware)
-        .forRoutes('lists');
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ListsMiddleware).forRoutes('lists');
   }
+}

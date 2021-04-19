@@ -37,11 +37,10 @@ function Article(props) {
                 name: value,
                 photo: pictures,
             },
-        })
-            .then(() => {
-                props.setIndicator(Math.random() * Math.random() * Math.random());
-                setValue('');
-            })
+        }).then(() => {
+            props.setIndicator(Math.random() * Math.random() * Math.random());
+            setValue('');
+        });
     }, [value]);
 
     let preference = [];
@@ -67,10 +66,10 @@ function Article(props) {
                     <button onClick={click}>add</button>
                     <ImageUploader
                         onChange={onDrop}
-                        buttonText="Choose images"
+                        buttonText={'Choose images'}
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                        withPreview="true"
-                        singleImage="false"
+                        withPreview={false}
+                        singleImage={false}
                     />
                 </div>
             )}
