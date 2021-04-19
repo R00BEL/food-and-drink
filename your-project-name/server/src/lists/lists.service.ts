@@ -8,6 +8,7 @@ export class ListsService {
     }
 
     async listAdd(listsDto, userId, pg) {
+      console.log(listsDto)
 		  let listAdd: []= await pg.any(`insert into lists(userId, category, name, photo) values ('${userId}', '${listsDto.category}', '${listsDto.name}', '${listsDto.photo}')`);
       listAdd;
     }

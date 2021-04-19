@@ -18,10 +18,9 @@ function Article(props) {
         var reader = new FileReader();
         if (picture[0]) {
             reader.readAsDataURL(picture[0]);
-            reader.onload = function (e) {
-                setPictures(reader.result);
-                props.setIndicator(Math.random() * Math.random() * Math.random());
-                picture = '';
+            reader.onload = async function (e) {
+                let a = await setPictures(reader.result);
+                return a;
             };
         }
     };
