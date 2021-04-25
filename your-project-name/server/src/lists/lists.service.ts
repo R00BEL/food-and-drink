@@ -1,11 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { NEST_PGPROMISE_CONNECTION } from 'nestjs-pgpromise';
 import { IDatabase } from 'pg-promise';
+import { Connection } from 'typeorm';
 
 @Injectable()
 export class ListsService {
   constructor(
     @Inject(NEST_PGPROMISE_CONNECTION) private readonly pg: IDatabase<any>,
+    private connection: Connection,
   ) {}
 
   async listAll(userId) {

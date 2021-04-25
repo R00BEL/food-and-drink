@@ -1,38 +1,61 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { NEST_PGPROMISE_CONNECTION } from 'nestjs-pgpromise';
 import { IDatabase } from 'pg-promise';
+import { Accounts } from 'src/accounts/acounts.entity';
+import { Connection, Repository } from 'typeorm';
+import { Categories } from './entity/categories.entity';
+import { Category_user } from './entity/category_user.entity';
 
 @Injectable()
 export class CategoryService {
   constructor(
     @Inject(NEST_PGPROMISE_CONNECTION) private readonly pg: IDatabase<any>,
+    @InjectRepository(Categories)
+    private categoriesRepository: Repository<Categories>,
+    @InjectRepository(Category_user)
+    private category_userRepository: Repository<Category_user>,
+    @InjectRepository(Accounts)
+    private accountsRepository: Repository<Accounts>,
+    private connection: Connection,
   ) {}
 
   async categoryAll(userId) {
-    return this.pg.any(
-      `select category from category_user where userid = '${userId}'`,
-    );
+    const user = await this.accountsRepository.findOne({ userid: userId });
+    const a = await this.category_userRepository.find({ user: user });
+    return await this.category_userRepository.find({ user: user });
   }
 
   async categoryAdd(listsDto, userId) {
-    listsDto.id = userId;
+    const checkForExistence = await this.categoriesRepository.findOne({
+      category: listsDto.category,
+    });
+    if (!checkForExistence) {
+      console.log('add in category');
 
-    const checkForExistence: string[] = await this.pg.any(
-      'select * from categories where category = $1 limit 1',
-      [listsDto.name],
-    );
-    if (!checkForExistence.length) {
-      let addCategory: string[] = await this.pg.any(
-        'insert into categories(category) values($1)',
-        [listsDto.name],
-      );
-      addCategory;
+      await this.connection.transaction(async (manager) => {
+        const categories = new Categories();
+
+        categories.category = listsDto.name;
+
+        await manager.save(categories);
+      });
     }
 
-    let addCategory_user: string[] = await this.pg.any(
-      'insert into category_user(userId, category) values($1, $2)',
-      [listsDto.id, listsDto.name],
-    );
-    addCategory_user;
+    await this.connection.transaction(async (manager) => {
+      const user = await this.accountsRepository.findOne({ userid: userId });
+      const category = await this.categoriesRepository.findOne({
+        category: listsDto.category,
+      });
+
+      console.log(user);
+      console.log(category);
+
+      const category_user = new Category_user();
+      category_user.user = user;
+      category_user.category = category;
+
+      await manager.save(category_user);
+    });
   }
 }
